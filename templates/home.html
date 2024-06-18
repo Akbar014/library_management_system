@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block head_title %} Library management System{% endblock %} 
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+          <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+{% block content %}
+<div class="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
+
+    <div class="flex flex-col w-full lg:w-1/2 justify-center items-start pt-12 pb-24 px-6 bg-white rounded-2xl bg-opacity-70 mx-3">
+        <h1 class="font-bold text-4xl my-4">Welcome to Amar Library</h1>
+        <p class="leading-normal mb-4">
+            Hi this is a banking website. 
+            This is a simple Mamar Bank where you can deposit money, withdraw money, take loan. You can also create an account, login, logout. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed nemo quaerat quo dicta, adipisci eum fuga ratione id numquam eius veniam placeat voluptatum, itaque tempora molestias vel, blanditiis fugiat ipsam!
+
+        </p>
+        <div class="flex justify-end w-full">
+            <a href="{% url 'register' %}" class="bg-blue-900 text-white rounded-none hover:bg-white hover:text-blue-900 hover:border-blue-900 shadow hover:shadow-lg py-2 px-4 border border-gray-900 hover:border-transparent">Register</a>
+        </div>
+    </div>
+    <div class="w-full lg:w-1/2 lg:py-6 text-center ">
+        {% comment %} <img class ="rounded-2xl" src ="{% static 'amarlibrary.jpeg' %}"/> {% endcomment %}
+        <img src="{% static 'amarlibrary.jpeg' %}" class="d-block w-100" alt="image">
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center align-items-center mt-5">
+    <h3 class="text-center"> POPULAR BRANDS </h3>
+    <div class="col-auto">
+  
+      <ul class="nav nav-pills mb-3 text-center mt-3" id="pills-tab" role="tablist">
+        <li class="nav-item me-2" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><a class="text-light" href="{% url 'home' %}">All</a></button>
+        </li>
+        {% for category in categories %}
+        <li class="nav-item me-2" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><a class="text-light" href="{% url 'category_wise_book' category.slug %}">{{category.name}}</a></button>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  
+    {% comment %} <h5 class="text-center text-info">Total Car Found : {{total_cars}}</h5> {% endcomment %}
+    
+</div>
+  
+<div class="row d-flex justify-content-center align-items-center">
+  {{total_books}}
+  {% for book in books %}
+
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <img src="{{book.image.url}}" style="height: 200px;" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{book.title}}</h5>
+        <p class="card-text">{{book.description|truncatewords:5 }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Category : {{book.category.name}}</li>
+        <li class="list-group-item">Price : {{book.price}} USD </li>
+      </ul>
+      <div class="card-body">
+        
+        {% comment %} <a href="{% url 'book_details' car.id %}" class="btn btn-success"> View Details  </a> {% endcomment %}
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'detail_post' book.id %}" class="btn btn-info text-light "> View Details</a>
+        <a href="{% url 'buy_book' book.id %}" class="btn btn-warning text-light "> Buy Now </a>
+        
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+</div>
+{% endblock %}
