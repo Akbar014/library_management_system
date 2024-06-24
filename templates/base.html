@@ -18,16 +18,18 @@
         </div>
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto px-10 ">
             
-            <div class="text-md lg:flex-grow"></div>
+            <div class=""></div>
             <div>
                 <a href="{% url 'home' %}" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-red-700 mt-4 lg:mt-0"> Home </a>
             </div>
+            {% if request.user.is_authenticated %}
             <div>
                 <a href="{% url 'deposit_money' %}" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-red-700 mt-4 lg:mt-0">Deposit Money </a>
             </div>
             <div>
                 <a href="{% url 'transaction_report' %}" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-red-700 mt-4 lg:mt-0"> Transaction Report  </a>
             </div>
+            {% endif %}
         </div>
 
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto px-10">
